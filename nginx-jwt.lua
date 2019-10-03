@@ -25,6 +25,7 @@ local M = {}
 function M.auth(claim_specs)
     -- require Authorization request header
     local auth_header = ngx.var.http_Authorization
+    local token = nil
 
     token_site = os.getenv("NGINX_JWT_TOKEN_SITE")
     
@@ -42,7 +43,7 @@ function M.auth(claim_specs)
         ngx.log(ngx.INFO, "Authorization: " .. auth_header)
 
     -- require Bearer token
-        local _, _, token = string.find(auth_header, "Bearer%s+(.+)")
+        _, _, token = string.find(auth_header, "Bearer%s+(.+)")
 
     end
     
